@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "martinpham",
+    "password": null,
+    "database": "bulletinboard_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "martinpham",
+    "password": null,
+    "database": "bulletinboard_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "martinpham",
+    "password": null,
+    "database": "bulletinboard_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
