@@ -35,25 +35,16 @@ app.use('/users', users);
 // created	timestamp
 
 var Messages = sequelize.define('messages',{
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true
-	},
-	title: Sequelize.STRING,
+	title: Sequelize.STRING(100),
 	body: Sequelize.TEXT,
-	createdAt: Sequelize.DATE,
-	
 });
 
 Messages
 	.sync()
 	.then(function(){
 		Messages.create({
-			id: 1,
 			title: 'this is the title',
-			body: 'this is the body',
-			// createdAt: Sequelize.DATE,
+			body: 'this is the body'
 		});
 });
 
