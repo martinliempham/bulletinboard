@@ -1,5 +1,24 @@
-extends layout
+doctype html
+html
+  head
+    title Bulletin Board Application
+    link(rel='stylesheet', href='/stylesheets/style.css')
 
-block content
-  h1= title
-  p Welcome to #{title}
+  body
+    h1 New_Blog
+     form(style='padding-bottom: 15px;',method="POST", action="/new")
+      .controls
+        textarea(rows='20',cols='40', name='text')
+      input(type="hidden", name="_method", value="PUT")
+
+      p Title
+         input(type="text", name="name")
+      p Email
+         input(type="email", name="email")
+      p Comment
+         input(type="text")
+      p
+         input(type="submit")
+      p
+         a(href='/')
+          button.btn View Messages

@@ -12,6 +12,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var messages = require('./models/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,13 +27,36 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/', users);
 
-// Column Name	Column Data Type
-// id	serial primary key
-// title	varchar (max length 100)
-// body	text
-// created	timestamp
+// Get the Javascript in the browser
+app.use("/javascripts", express.static("./outJavascripts"));
+// Get the URL
+app.all("/", function(req, res){
+  // Render the Jade and Send for the client (Browser)
+  req.render("index.jade");
+});
+
+app.get('/', function(req, res){
+		res.render('index',{messages:rows});
+	})
+app.get('/new', function(req, res){
+//needs to access the db and get the messages
+	// messages.findAll().then(function(rows){
+	res.render('new');
+
+		// console.log(rows)
+	})
+
+
+//it needs to give the 'new' view that data
+
+
+
+//then render the new view
+
+// })
+app.post('/new', function(req, res){
 
 var Messages = sequelize.define('messages',{
 	title: Sequelize.STRING(100),
@@ -43,10 +67,13 @@ Messages
 	.sync()
 	.then(function(){
 		Messages.create({
-			title: 'this is the title',
-			body: 'this is the body'
+			title: req.body.title,
+			body: req.body.messages
 		});
-});
+		res.redirect('/new')
+	});
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -67,14 +94,14 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(3002, function(){
-  console.log('App is listening on port 3000');
+  console.log('App is listening on port 3002');
 });
 
-app.get('/users', function(request, response){
-	users.findAll().then(function(rows){
+app.get('/new', function(request, response){
+	messages.findAll().then(function(rows){
 		response.send(rows);
 	});
-  // response.status(404).send('page not found')
+  response.status(404).send('page not found')
 });
 
 module.exports = app;
